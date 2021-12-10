@@ -1,0 +1,28 @@
+densratio == 0.2.2
+emcee == 3.1.1
+nflows~=0.14
+h5py == 3.4.0
+lightgbm~=3.1.0
+matplotlib~=3.3.3
+numpy~=1.19.5+vanilla
+optuna~=2.4.0
+pandas~=1.2.1
+scikit-multiflow == 0.5.3
+scikit_learn == 0.23.2
+scipy == 1.5.4
+seaborn == 0.11.2
+statsmodels == 0.12.2
+tensorboard-pytorch == 0.7.1
+tensorboardx == 2.4
+tensorboardx-hparams == 1.7.2
+tensorflow-probability == 0.13.0
+tfp-nightly == 0.14.0.dev20210915
+torch~=1.8.1+cu102
+torchvision == 0.10.0
+tqdm~=4.54.0
+utils == 1.0.1
+joblib~=0.17.0
+scikit-learn~=0.23.0
+river~=0.8.0
+sklearn~=0.0
+cvxopt~=1.2.7
