@@ -378,7 +378,7 @@ class ErrorDriftModel(DensityDriftModel):
         Parameters
         ----------
         weight_model : a WeightModel instance
-        A WeightModel instance, which stores reweighing schemes and density model.
+        A WeightModel instance, which stores reweighting schemes and density model.
 
         train_size : int
         Up to which index of the data, it's pre-training data.
@@ -404,10 +404,10 @@ class ErrorDriftModel(DensityDriftModel):
         not recommended for classification.
 
     """
-    def __init__(self, weight_model, ml_model=GaussianNB(),
+    def __init__(self, weight_model, train_size, ml_model=GaussianNB(),
                  drift_detector=PageHinkley,  # lambda_option=0.1),
                  name="None", old_to_use=50, update_wm=150, verbose=False, whiten=True):
-        super().__init__(weight_model, ml_model, drift_detector, name, old_to_use, update_wm, verbose)
+        super().__init__(weight_model, train_size, ml_model, drift_detector, name, old_to_use, update_wm, verbose)
         self.whiten = whiten
 
     def initial_fit(self, X, y):
