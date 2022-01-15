@@ -17,7 +17,7 @@ tensorboardx == 2.4
 tensorboardx-hparams == 1.7.2
 tensorflow-probability == 0.13.0
 tfp-nightly == 0.14.0.dev20210915
-torch~=1.8.1+cu102
+torch~=1.9.0+cu102
 torchvision == 0.10.0
 tqdm~=4.54.0
 utils == 1.0.1

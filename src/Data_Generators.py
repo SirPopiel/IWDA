@@ -135,14 +135,14 @@ def new_similar_distribution(pre_mean, pre_cov, ch_mean, ch_cov,  change_X=True,
     # the two can be separated and simulated independently
 
     if change_y:
-        pre_mean[ch_mean] = pre_mean[ch_mean] + rng.uniform(-0.25, 0.25, size=sum(ch_mean))
+        pre_mean[ch_mean] = pre_mean[ch_mean] + rng.uniform(-0.1, 0.1, size=sum(ch_mean))
         pre_cov[ch_cov] = np.reshape(pre_cov[ch_cov], -1) + rng.uniform(-0.1, 0.1, sum(sum(ch_cov)))
         pre_cov = np.tril(pre_cov.T) + np.triu(pre_cov, 1)
         if not np.all(np.linalg.eigvals(pre_cov) > 0):
             pre_cov = nearestPD(pre_cov)
     else:
         pre_mean_old = pre_mean
-        pre_mean[ch_mean] = pre_mean[ch_mean] + rng.uniform(-0.25, 0.25, size=sum(ch_mean))
+        pre_mean[ch_mean] = pre_mean[ch_mean] + rng.uniform(-0.1, 0.1, size=sum(ch_mean))
         pre_mean[-1] = pre_mean_old[-1]
         pre_cov_old = pre_cov
         pre_cov[ch_cov] = np.reshape(pre_cov[ch_cov], -1) + rng.uniform(-0.1, 0.1, sum(sum(ch_cov)))

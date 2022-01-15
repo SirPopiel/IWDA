@@ -218,45 +218,36 @@ if __name__ == "__main__":
         rmse_ewmamm.append(rmse_local)
         ewmamm_p = pd.DataFrame(rmse_ewmamm)
         ewmamm = pd.DataFrame(rmse_ewmamm).cumsum().div(np.cumsum(np.ones(df.shape[0] - train_size)), axis=0)
-        legenda = {"retraining_last_1": "LAST1", "retraining_all": "ALL", "multi_rw_oas": "M-IW-Norm",
-                   "rw_oas": "IW-Norm",
-                   "rw_gmm": "IW-GMM", "rw_flow": "IW-MAF",
-                   "rw_kde": "IW-KDE", "rw_kde_bis": "IW-KDE2", "rw_oas_error": "IW-Norm-Error",
-                   "multi_rw_oas_error": "M-IW-Norm-Error", "rw_gmm_error": "IW-GMM-Error", "rw_adversarial": "Prob",
-                   "ARF": "ARF", "HRT": "HRT"}
-
-        plt.style.use('seaborn')
-        plt.rcParams["figure.figsize"] = (12, 8)
+        plt.rcParams["figure.figsize"] = (7, 6)
         plt.rcParams["savefig.facecolor"] = 'white'
 
-        exp = ["rw_gmm", "HRT", "ARF"]
+        # exp = ["rw_oas", "multi_rw_oas", "rw_flow", "rw_kde_bis", "rw_gmm", "rw_adversarial"]
+        exp = ["retraining_all", "retraining_last_1", "HRT", "ARF", "rw_flow", "EWMAMM"]
+
+        legenda = {"retraining_last_1": "LAST", "retraining_all": "ALL", "multi_rw_oas": "IWDA(Multi,Norm)",
+                   "rw_oas": "IW-Norm-Dens",
+                   "EWMAMM": "Expert", "rw_flow": "IWDA(PL, MAF)", "ARF": "ARF", "HRT": "HRT"}
+
+        colors = {"retraining_last_1": "goldenrod", "retraining_all": "purple", "multi_rw_oas": "red",
+                  "EWMAMM": "slateblue", "rw_flow": "red", "ARF": "darkolivegreen", "HRT": "yellowgreen"}
+
+        linestyles = {"retraining_last_1": (0, (2, 2, 2, 2)), "retraining_all": "dotted",
+                      "multi_rw_oas": (0, (2, 1, 1, 1)),
+                      "EWMAMM": "solid", "rw_flow": (0, (2, 1, 1, 1)), "ARF": (0, (2, 1, 1, 2)),
+                      "HRT": (0, (1, 1, 1, 2))}
 
         fig, ax = plt.subplots()
-        for col in rmse_final_nn.columns:  # rank[:3].index:
-            if col in exp:  # or col=="retraining_last_1" or col=="retraining_all":
-                ax.plot(rmse_final_nn[col].rolling(500).mean(),
-                        label=legenda[col] + ": " + str(round(rmse_cum_nn[col][-1:], 3).values[0]))
+        for col in exp:
+            ax.plot(rmse_cum_nn[col][500:], label=legenda[col], color=colors[col], linestyle=linestyles[col],
+                    linewidth=2.5)
+        # ax.plot(ewmamm[500:], label="Expert", color=colors["EWMAMM"],  linestyle=linestyles["EWMAMM"])
 
-        ax.plot(ewmamm_p.rolling(500).mean(), label="Expert" + ": " + str(round(ewmamm[-1:].values[0][0], 3)),
-                color="k")
-
-        plt.legend(loc="center left", bbox_to_anchor=(1, 0.7), prop={'size': 12})
-        plt.xlabel("Time", size=16)
-        plt.ylabel("Rolling Window RMSE", size=16)
-        plt.title("AirQuality rolling RMSE", size=16)
-        plt.show()
-        #plt.savefig("Plots/AirQuality_pu_arf.png", bbox_inches='tight')
-
-        fig, ax = plt.subplots()
-        for col in rmse_final_nn.columns:  # rank[:3].index:
-            if col in exp:
-                ax.plot(rmse_cum_nn[col][500:],
-                        label=legenda[col] + ": " + str(round(rmse_cum_nn[col][-1:], 3).values[0]))
-        ax.plot(ewmamm[500:], label="Expert" + ": " + str(round(ewmamm[-1:].values[0][0], 3)), color="k")
-
-        plt.legend(loc="center left", bbox_to_anchor=(1, 0.7), prop={'size': 12})
-        plt.xlabel("Time", size=16)
-        plt.ylabel("Cumulative RMSE", size=16)
-        plt.title("AirQuality cumulative RMSE", size=16)
-        plt.show()
+        plt.rc('font', family='Times New Roman')
+        ax.tick_params(axis='both', which='major', labelsize=14)
+        ax.tick_params(axis='both', which='minor', labelsize=14)
+        plt.legend(loc="upper center", prop={'size': 12})
+        plt.xlabel("t", size=16)
+        plt.ylabel("ARMSE", size=14)
+        plt.margins(0.001)
+        plt.savefig("Plots/AirQuality_cu_arf.pdf", bbox_inches='tight')
 
