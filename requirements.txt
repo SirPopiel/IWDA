@@ -4,7 +4,7 @@ nflows~=0.14
 h5py == 3.4.0
 lightgbm~=3.1.0
 matplotlib~=3.3.3
-numpy~=1.19.5+vanilla
+numpy~=1.22
 optuna~=2.4.0
 pandas~=1.2.1
 scikit-multiflow == 0.5.3
